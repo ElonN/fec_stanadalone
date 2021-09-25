@@ -1,4 +1,4 @@
-package kcp
+package kcp_standalone
 
 import (
 	"encoding/binary"
