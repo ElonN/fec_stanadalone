@@ -2,7 +2,6 @@ package kcp_standalone
 
 import (
 	"encoding/binary"
-	"sync/atomic"
 
 	"github.com/klauspost/reedsolomon"
 )
@@ -179,9 +178,6 @@ func (dec *fecDecoder) decode(in fecPacket) (recovered [][]byte) {
 
 	// keep rxlimit
 	if len(dec.rx) > dec.rxlimit {
-		if dec.rx[0].flag() == typeData { // track the unrecoverable data
-			atomic.AddUint64(&DefaultSnmp.FECShortShards, 1)
-		}
 		dec.rx = dec.freeRange(0, 1, dec.rx)
 	}
 
