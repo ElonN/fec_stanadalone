@@ -2,6 +2,7 @@ package kcp_standalone
 
 import (
 	"encoding/binary"
+	"sync"
 	"time"
 
 	"github.com/klauspost/reedsolomon"
@@ -18,6 +19,19 @@ const (
 	// maximum packet size
 	mtuLimit = 1500
 )
+
+var (
+	// a system-wide packet buffer shared among sending, receiving and FEC
+	// to mitigate high-frequency memory allocation for packets, bytes from xmitBuf
+	// is aligned to 64bit
+	xmitBuf sync.Pool
+)
+
+func init() {
+	xmitBuf.New = func() interface{} {
+		return make([]byte, mtuLimit)
+	}
+}
 
 // fecPacket is a decoded FEC packet
 type fecPacket []byte
