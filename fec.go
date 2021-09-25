@@ -14,6 +14,9 @@ const (
 	typeParity         = 0xf2
 	fecExpire          = 60000
 	rxFECMulti         = 3 // FEC keeps rxFECMulti* (dataShard+parityShard) ordered packets in memory
+
+	// maximum packet size
+	mtuLimit = 1500
 )
 
 // fecPacket is a decoded FEC packet
