@@ -69,6 +69,10 @@ func newFECDecoder(dataShards, parityShards int) *fecDecoder {
 	return dec
 }
 
+func _itimediff(later, earlier uint32) int32 {
+	return (int32)(later - earlier)
+}
+
 // decode a fec packet
 func (dec *fecDecoder) decode(in fecPacket) (recovered [][]byte) {
 	// insertion
