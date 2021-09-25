@@ -2,6 +2,7 @@ package kcp_standalone
 
 import (
 	"encoding/binary"
+	"time"
 
 	"github.com/klauspost/reedsolomon"
 )
@@ -74,6 +75,12 @@ func newFECDecoder(dataShards, parityShards int) *fecDecoder {
 func _itimediff(later, earlier uint32) int32 {
 	return (int32)(later - earlier)
 }
+
+// monotonic reference time point
+var refTime time.Time = time.Now()
+
+// currentMs returns current elapsed monotonic milliseconds since program startup
+func currentMs() uint32 { return uint32(time.Since(refTime) / time.Millisecond) }
 
 // decode a fec packet
 func (dec *fecDecoder) decode(in fecPacket) (recovered [][]byte) {
