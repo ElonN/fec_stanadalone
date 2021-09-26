@@ -1,4 +1,4 @@
-package kcp_standalone
+package fec_stanadalone
 
 import (
 	"encoding/binary"
